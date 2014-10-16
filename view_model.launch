@@ -1,0 +1,15 @@
+<launch>
+  <!-- Load URDF to standard parameter. -->
+  <param name="robot_description" textfile="$(find dagny_viz)/dagny.urdf" />
+
+  <!-- Publish TFs from links and joints found in URDF. -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />  
+
+  <!-- Supply a /joint_states topic for any non-static joints, so that robot_state_publisher
+       can publish TFs for those too. -->
+  <param name="use_gui" value="true"/>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+  <!-- Visualize model, using supplied configuration. -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find dagny_viz)/model.rviz" />
+</launch>
